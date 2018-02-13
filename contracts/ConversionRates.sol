@@ -85,6 +85,11 @@ contract ConversionRates is ConversionRatesInterface, VolumeImbalanceRecorder, U
 
         uint bytes14Offset = BYTES_14_OFFSET;
 
+        if(indices.length == 0) {
+          uint data1 = (blockNumber * (bytes14Offset * bytes14Offset));
+          tokenRatesCompactData[0] = bytes32(data1);        
+        }
+
         for (uint i = 0; i < indices.length; i++) {
             require(indices[i] < tokenRatesCompactData.length);
             uint data = uint(buy[i]) | uint(sell[i]) * bytes14Offset | (blockNumber * (bytes14Offset * bytes14Offset));
